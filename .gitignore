@@ -1,0 +1,139 @@
+
+
+# Added by gemignore. Snippet 'Compass'
+.sass-cache
+
+#packing-only formats
+*.iso
+*.tar
+
+#package management formats
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+
+
+# Added by gemignore. Snippet 'Global/Eclipse'
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+
+# Added by gemignore. Snippet 'Global/Emacs'
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+
+# Added by gemignore. Snippet 'Global/Linux'
+.*
+!.gitignore
+*~
+
+
+# Added by gemignore. Snippet 'Global/OSX'
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+
+# Added by gemignore. Snippet 'Global/SASS'
+### SASS Ignores - "Sassy CSS" http://sass-lang.com/
+*.sass-cache
+
+
+# Added by gemignore. Snippet 'Global/SVN'
+.svn/
+
+
+# Added by gemignore. Snippet 'Global/Tags'
+# Ignore tags created by etags and ctags
+TAGS
+!TAGS/
+tags
+!tags/
+
+
+# Added by gemignore. Snippet 'Global/TextMate'
+*.tmproj
+*.tmproject
+tmtags
+
+
+# Added by gemignore. Snippet 'Global/Windows'
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+
+# Added by gemignore. Snippet 'Global/vim'
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+# Added by gemignore. Snippet 'Node'
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+npm-debug.log

@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+@import "compass";
+@import "settings";
+
+#container {
+  @include display-box;
+  @include box-orient(horizontal);
+  width: 100%;
+  color: white;
+  font-size: 24px;
+  height: 400px;
+
+  #mainContent {
+    @include box-ordinal-group(2);
+    @include box-flex(4);
+    background-color: lightgreen;
+  }
+
+  .sub {
+    @include box-flex(1);
+  }
+
+  #left {
+    @include box-ordinal-group(1);
+    background-color: red;
+  }
+
+  #right {
+    @include box-ordinal-group(3);
+    background-color: blue;
+  }
+}
