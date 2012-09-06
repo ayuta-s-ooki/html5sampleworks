@@ -1,0 +1,64 @@
+#HTML5 サンプル
+
+##カテゴリ
+- セマンティクス(microdata, microformatsとか)
+- マルチメディア(video, audio関連)
+- グラフィックス・エフェクト(Canvas, SVG, WebGL)
+- デバイスアクセス(Camera, GPSとか)
+- CSS3
+- オフライン/ストレージ
+- コネクティビティ(websocketとか)
+- パフォーマンス(worker?)
+
+###API
+
+- canvas
+- audio
+- server-sent events
+- application cache
+- web storage
+- geolocation
+- file
+- drag&drop
+- media capture
+- application launcher
+- web forms
+- svg
+- video
+- websocket
+- offline applications
+- indexedDB
+- web workers
+- selection(queryselector)
+- webGL
+- system information api
+- forms validation
+- edit
+- markup/element
+- forms
+- media
+- `<script>` async, defer
+- `<style>` scoped
+- CORS
+- base64関数
+- web notification
+- fullscreen
+- online/offline
+- stream
+- Web Intents
+- media capture
+- xhrv2
+- requestAnimationFrame: setTimeout/setIntervalのアニメーション用
+- page visibility
+- user timing
+- application cache
+- clipboard
+- jQueryっぽいもの
+	- selectors api(jQuery selector)
+	- matchesSelector api(jQuery#live)
+	- classList(jQuery#addClass)
+- history
+- mediacontroller
+- web messaging
+- Device Orientation events
+- Web Notifications
