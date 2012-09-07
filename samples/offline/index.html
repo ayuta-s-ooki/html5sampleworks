@@ -21,7 +21,7 @@
 </style>
 </head>
 <body>
-<h1>Online/Offlineイベントサンプル</h1>
+<h1>Online/Offlineイベントサンプル(WebKit)</h1>
 <section id="wrapper">
 <p>ネットワーク状態: <span id="status">チェック中...</span></p>
 </section>
@@ -40,13 +40,13 @@
     statusElem.innerHTML = (type === 'online') ? 'オンライン' : 'オフライン';
   }
 
+  function notifyStatus(e) {
+    updateStatus(e.type);
+  }
+
   // --- Online/Offlineイベント監視
-  document.addEventListener('online', function(e) {
-    updateStatus(e.type);
-  }, false);
-  document.addEventListener('offline', function(e) {
-    updateStatus(e.type);
-  }, false);
+  document.addEventListener('online', notifyStatus, false);
+  document.addEventListener('offline', notifyStatus, false);
 
   // Entry point.
   if (navigator.onLine) {
