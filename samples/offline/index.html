@@ -44,16 +44,15 @@
     updateStatus(e.type);
   }
 
-  // --- Online/Offlineイベント監視
+  // --- Online/Offlineイベント監視(Chrome)
   document.addEventListener('online', notifyStatus, false);
   document.addEventListener('offline', notifyStatus, false);
 
-  // Entry point.
-  if (navigator.onLine) {
-    updateStatus('online');
-  } else {
-    updateStatus('offline');
-  }
+  // Entry point(Safari).
+  setInterval(function() {
+    var type = navigator.onLine ? 'online' : 'offline';
+    updateStatus(type);
+  }, 250);
 }(this));
 </script>
 </body>
