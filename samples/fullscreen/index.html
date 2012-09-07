@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>FullScreen API</title>
+<script src="js/modernizr.js"></script>
+</head>
+<body>
+<div id="container">
+<!-- Video source: http://www.w3.org/2010/05/video/mediaevents.html -->
+<video controls>
+<source id="mp4" src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
+<source id="webm" src="http://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">
+<source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
+<p>このブラウザは、HTML5 Video 要素に対応していません。</p>
+</video>
+<div id="controller">
+<button id="enterBtn">フルスクリーンで見る</button>
+<button id="exitBtn">フルスクリーンを解除</button>
+</div>
+</div>
+<script>
+(function(global) {
+  // document.webkitFullscreenEnabled
+  // document.body.webkitRequestFullScreen
+  var enterBtn = document.getElementById('enterBtn'),
+      exitBtn = document.getElementById('exitBtn'),
+      container = document.getElementById('container');
+
+  // フルスクリーンきりかえ
+  function enterFullScreen() {
+  }
+
+  // フルスクリーン解除
+  function exitFullScreen() {
+  }
+
+  enterBtn.addEventListener('click', enterFullScreen, false);
+  exitBtn.addEventListener('click', exitFullScreen, false);
+}(this));
+</script>
+</body>
+</html>
