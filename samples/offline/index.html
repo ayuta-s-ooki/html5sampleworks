@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Online/Offline Events</title>
+<style>
+#wrapper {
+  margin: 20px 5px;
+}
+#status {
+  background-color: #ccc;
+  color: white;
+  padding: 5px;
+}
+#status.online {
+  background-color: #0c0;
+}
+#status.offline {
+  background-color: #c00;
+}
+</style>
+</head>
+<body>
+<h1>Online/Offlineイベントサンプル</h1>
+<section id="wrapper">
+<p>ネットワーク状態: <span id="status">チェック中...</span></p>
+</section>
+<script>
+(function(global) {
+  var statusElem = document.getElementById('status');
+
+  /**
+   * ネットワークオンライン/オフラインの表示反映
+   */
+  function updateStatus(type) {
+    var classList = statusElem.classList,
+        prevType = classList.item(0);
+    prevType && classList.remove(prevType);
+    classList.add(type);
+    console.log(type, prevClass);
+    statusElem.innerHTML = (type === 'online') ? 'オンライン' : 'オフライン';
+  }
+
+  // --- Online/Offlineイベント監視
+  document.addEventListener('online', function(e) {
+    updateStatus(e.type);
+  }, false);
+  document.addEventListener('offline', function(e) {
+    updateStatus(e.type);
+  }, false);
+
+  // Entry point.
+  if (navigator.onLine) {
+    updateStatus('online');
+  } else {
+    updateStatus('offline');
+  }
+}(this));
+</script>
+</body>
+</html>
