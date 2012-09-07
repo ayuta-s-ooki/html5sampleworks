@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>classList demo</title>
+<style>
+#container {
+  margin: 10px;
+  width: 350px;
+  height: 100px;
+}
+#content {
+  margin: 5px;
+  border: 1px solid black;
+  height: 50px;
+}
+.lightgreen {
+  background-color: lightgreen;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+<h1>classListを使ってスタイル適用</h1>
+<div id="container">
+<div id="content">
+<span>背景色を切り替えます。</span>
+API: <span class="choice"></span>
+</div>
+<a href="javascript: void(0);" id="add">add()</a>
+<a href="javascript: void(0);" id="remove">remove()</a>
+<a href="javascript: void(0);" id="toggle">toggle()</a>
+</div>
+<script>
+(function(global) {
+  var content = document.getElementById('content'),
+      text = document.querySelector('#content .choice'),
+      addBtn = document.getElementById('add'),
+      removeBtn = document.getElementById('remove'),
+      toggleBtn = document.getElementById('toggle');
+
+  addBtn.addEventListener('click', function(e) {
+    text.innerHTML = 'add()';
+    content.classList.add('lightgreen');
+  }, false);
+
+  removeBtn.addEventListener('click', function(e) {
+    text.innerHTML = 'remove()';
+    content.classList.remove('lightgreen');
+  }, false);
+
+  toggleBtn.addEventListener('click', function(e) {
+    text.innerHTML = 'toggle()';
+    content.classList.toggle('lightgreen');
+  }, false);
+}(this));
+</script>
+</body>
+</html>
