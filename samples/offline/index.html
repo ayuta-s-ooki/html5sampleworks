@@ -37,7 +37,6 @@
         prevType = classList.item(0);
     prevType && classList.remove(prevType);
     classList.add(type);
-    console.log(type, prevClass);
     statusElem.innerHTML = (type === 'online') ? 'オンライン' : 'オフライン';
   }
 
