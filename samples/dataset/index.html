@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Dataset API</title>
+<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<style>
+body {
+  margin: 5px 15px 5px;
+}
+h1 {
+  padding-left: 15px;
+}
+#user {
+  border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<h1>data-*: カスタムデータ属性</h1>
+<pre><code>&lt;div data-username=&quot;名前&quot; data-uid=&quot;ID&quot; data-date-of-birth=&quot;誕生日&quot;&gt;&lt;/div&gt;
+</code></pre>
+<div data-username="john" data-uid="1234" id="user" data-date-of-birth="1970-01-01">
+<div>data-username: <span id="username"></span></div>
+<div>data-uid: <span id="uid"></span></div>
+<div>data-date-of-birth: <span id="dateOfBirth"></span></div>
+</div>
+<span>カステム属性の変更</span>
+<select name="user" id="dataKeys">
+<option value="username">data-username</option>
+<option value="uid">data-uid</option>
+<option value="dateOfBirth">data-date-of-birth</option>
+</select>
+<input type="text" id="dataValue" class="text" value="" name="" />
+<input type="button" id="dataBtn" class="button" value="data属性変更" name="" />
+<script>
+(function(global) {
+  var userElem = document.getElementById('user'),
+      nameElem = document.getElementById('username'),
+      idElem = document.getElementById('uid'),
+      dateOfBirthElem = document.getElementById('dateOfBirth'),
+      dataKeys = document.getElementById('dataKeys'),
+      dataValue = document.getElementById('dataValue'),
+      dataBtn = document.getElementById('dataBtn');
+
+  // カスタムデータ属性を取得して表示
+  function updateData() {
+    nameElem.innerHTML = userElem.dataset.username;
+    idElem.innerHTML = userElem.dataset.uid;
+    dateOfBirthElem.innerHTML = userElem.dataset.dateOfBirth;
+  }
+
+  dataBtn.addEventListener('click', function(e) {
+    var index = dataKeys.selectedIndex,
+        val = dataValue.value;
+    if (val.length > 0) {
+      var key = dataKeys.options[index].value;
+      // カスタムデータ属性変更
+      userElem.dataset[key] = val;
+      // 表示更新
+      updateData();
+    }
+  }, false);
+
+  updateData();
+}(this));
+</script>
+</body>
+</html>
