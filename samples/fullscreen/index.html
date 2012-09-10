@@ -8,7 +8,7 @@
 <body>
 <div id="container">
 <!-- Video source: http://www.w3.org/2010/05/video/mediaevents.html -->
-<video controls>
+<video id="video" controls>
 <source id="mp4" src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
 <source id="webm" src="http://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">
 <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
@@ -21,18 +21,26 @@
 </div>
 <script>
 (function(global) {
-  // document.webkitFullscreenEnabled
-  // document.body.webkitRequestFullScreen
   var enterBtn = document.getElementById('enterBtn'),
       exitBtn = document.getElementById('exitBtn'),
       container = document.getElementById('container');
 
   // フルスクリーンきりかえ
   function enterFullScreen() {
+    var fn = Modernizr.prefixed('requestFullscreen', container);
+    if (!fn) {  // 旧APIを試す
+      fn = Modernizr.prefixed('requestFullScreen', container);
+    }
+    fn && fn();
   }
 
   // フルスクリーン解除
   function exitFullScreen() {
+    var fn = Modernizr.prefixed('exitFullscreen', document);
+    if (!fn) {  // 旧APIを試す
+      fn = Modernizr.prefixed('cancelFullScreen', document);
+    }
+    fn && fn();
   }
 
   enterBtn.addEventListener('click', enterFullScreen, false);
