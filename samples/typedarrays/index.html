@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Typed Arrays</title>
+</head>
+<body>
+<h1>Typed Arraysのサンプル</h1>
+<div>
+imageData instanceof Uint8ClampedArray?: <span id="result"></span>
+</div>
+<hr />
+<canvas id="canvas" width="320" height="320"></canvas>
+<script>
+var canvas = document.getElementById('canvas'),
+    width = canvas.width,
+    height = canvas.height,
+    ctx = canvas.getContext('2d'),
+    imageData = ctx.getImageData(0, 0, width, height),
+    resultElem = document.getElementById('result');
+
+var typedArray = imageData.data;
+
+// ImageDataがUint8ClampedArray(typed array)かどうか
+resultElem.innerHTML = typedArray instanceof Uint8ClampedArray;
+
+for (var x = 0; x < width; ++x) {
+  for (var y = 0; y < height; ++y) {
+    // 対象pixelのインデックス(色情報は4バイト)
+    var index = (x + y * width) * 4;
+    // 色情報rgbaの書き換え
+    typedArray[index + 0] = x;
+    typedArray[index + 1] = y;
+    typedArray[index + 2] = (x + y) / 255;
+    typedArray[index + 3] = 255;
+  }
+}
+imageData.data = typedArray.subarray(0);
+ctx.putImageData(imageData, 0, 0);
+</script>
+</body>
+</html>
