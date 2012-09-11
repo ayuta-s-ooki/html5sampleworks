@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>CSS content</title>
+<style>
+body {
+  margin: 5px;
+}
+h1:after {
+  content: url(css3-logo.png);
+  padding: 5px 10px;
+}
+ul {
+  padding: 5px;
+}
+li {
+  list-style: none;
+}
+.email-address {
+  font-style: italic;
+}
+.email-address:before {
+  content: 'Email address: ';
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+<h1>CSS contentの例</h1>
+<ul>
+  <li class="email-address">johnsmith@gmail.com</li>
+</ul>
+</body>
+</html>
