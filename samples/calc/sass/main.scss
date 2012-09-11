@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+@import "compass";
+@import "settings";
+
+// CSS3 calc()ミックスイン
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+// 共通のボックスサイズ
+$boxWidth: 50px;
+$boxHeight: 50px;
+
+/* 共通のボックスサイズを設定 */
+#normal,
+#calc,
+#sassAdd {
+  width: $boxWidth;
+  height: $boxHeight;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+/* 元のまま */
+#normal {
+  background-color: lime;
+}
+
+/*
+ * CSS3 calc()を使用して異なる単位でサイズを拡大
+ *    calc($boxWidth + 1em);
+ */
+#calc {
+  @include calc(width, '#{$boxWidth} + 1em');
+  background-color: red;
+}
+
+/*
+ * SASSの計算式でサイズを拡大(同一単位の加算か掛け算)
+ *    $boxWidth(px) + 50px;
+ */
+#sassAdd {
+  color: white;
+  width: $boxWidth + 50px;
+  background-color: blue;
+}
