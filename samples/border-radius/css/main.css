@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* ボックスの共通設定 */
+/* line 10, ../sass/main.scss */
+.box {
+  margin: 5px;
+  width: 300px;
+  height: 250px;
+  border: 1px solid black;
+  padding-top: 15px;
+  text-align: center;
+}
+
+/* boder-radiusなし */
+/* line 20, ../sass/main.scss */
+#box1 {
+  background-color: lime;
+}
+
+/* boder-radius: 25px; */
+/* line 25, ../sass/main.scss */
+#box2 {
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+  border-radius: 25px;
+  background-color: yellow;
+}
+
+/* 左上のみ boder-top-left-radius: 50px; */
+/* line 31, ../sass/main.scss */
+#box3 {
+  -moz-border-radius-topleft: 50px;
+  -webkit-border-top-left-radius: 50px;
+  border-top-left-radius: 50px;
+  background-color: #c0c0c0;
+}
