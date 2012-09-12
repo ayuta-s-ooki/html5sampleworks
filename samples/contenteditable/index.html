@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>contenteditable</title>
+<style>
+#wrapper {
+  width: 600px;
+  margin: 0 auto;
+}
+h1,
+article > * {
+  margin: 20px;
+  padding: 10px;
+}
+h2 {
+  font-size: 100%;
+  font-style: italic;
+  margin: 5px;
+}
+li {
+  margin-bottom: 10px;
+}
+#editable ol {
+  margin: 10px;
+  padding-left: 15px;
+}
+#editable:hover {
+  border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+  <h1>ContentEditableサンプル</h1>
+  <article>
+    <section>
+      <p>この下の文章は編集が可能です。</p>
+    </section>
+    <section contenteditable="true" id="editable">
+      <h2>編集してみてください</h2>
+      <p>パラブラフ要素です。</p>
+      <ol>
+        <li>リスト1</li>
+        <li>リスト2</li>
+        <li>リスト3</li>
+      </ol>
+    </section>
+    <div>
+      <input id="clear" type="button" class="button" value="変更をクリア" />
+    </div>
+  </article>
+</div>
+<script>
+(function(global) {
+  // 編集領域
+  var editable = document.getElementById('editable');
+
+  // 編集領域からフォーカスが外れた時
+  editable.addEventListener('blur', function(e) {
+    // ローカルストレージにHTMLを保存する
+    localStorage.setItem('contenteditable', this.innerHTML);
+    document.designMode = 'off';
+  }, false);
+
+  // 編集領域にフォーカスした時
+  editable.addEventListener('focus', function(e) {
+    document.designMode = 'on';
+  }, false);
+
+  // クリアボタンで、編集/保存したHTMLをクリアする
+  document.getElementById('clear').addEventListener('click', function(e) {
+    localStorage.clear();
+    window.location = window.location;
+  }, false);
+
+  // Entry point.
+  if (localStorage.getItem('contenteditable')) {
+    // HTMLが保存されている場合は、ロードする
+    editable.innerHTML = localStorage.getItem('contenteditable');
+  }
+}(this));
+</script>
+</body>
+</html>
