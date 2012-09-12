@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>CSS3 text-overflow</title>
+<style>
+body {
+  margin: 5px;
+}
+#wrapper {
+  width: 45%;
+}
+span {
+  font-weight: bold;
+}
+p {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.visible {
+  overflow: visible;
+}
+.hidden {
+  background-color: silver;
+}
+.clip {
+  text-overflow: clip;
+  background-color: lightblue;
+}
+.ellipsis {
+  text-overflow: ellipsis;
+  background-color: yellow;
+}
+.custom {
+  text-overflow: '-';
+  background-color: lightgreen;
+}
+</style>
+</head>
+<body>
+<h1>CSS3 Text-overflowサンプル</h1>
+<div id="wrapper">
+<span>visible(normal)</span>
+<p class="visible">The text-overflow CSS property determines how overflowed content that is not displayed is signaled to the users. It can be clipped, display an ellipsis ('…', U+2026 HORIZONTAL ELLIPSIS) or a Web author-defined string.</p>
+<span>hidden only(default: clip)</span>
+<p class="hidden">The text-overflow CSS property determines how overflowed content that is not displayed is signaled to the users. It can be clipped, display an ellipsis ('…', U+2026 HORIZONTAL ELLIPSIS) or a Web author-defined string.</p>
+<span>clip</span>
+<p class="clip">The text-overflow CSS property determines how overflowed content that is not displayed is signaled to the users. It can be clipped, display an ellipsis ('…', U+2026 HORIZONTAL ELLIPSIS) or a Web author-defined string.</p>
+<span>ellipsis</span>
+<p class="ellipsis">The text-overflow CSS property determines how overflowed content that is not displayed is signaled to the users. It can be clipped, display an ellipsis ('…', U+2026 HORIZONTAL ELLIPSIS) or a Web author-defined string.</p>
+<span>custom string: "-"(Firefoxで確認)</span>
+<p class="custom">The text-overflow CSS property determines how overflowed content that is not displayed is signaled to the users. It can be clipped, display an ellipsis ('…', U+2026 HORIZONTAL ELLIPSIS) or a Web author-defined string.</p>
+</div>
+</body>
+</html>
