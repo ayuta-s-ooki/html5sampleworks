@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Selectors API</title>
+<style>
+* {
+  margin: 5px;
+}
+li {
+  list-style: none;
+  display: inline;
+}
+.selected {
+  background-color: pink;
+}
+</style>
+</head>
+<body>
+<h1>querySelector/querySelectorAllサンプル</h1>
+<div id="container">
+  <div id="header">
+    <span class="head">header</span>
+  </div>
+  <div id="content">
+    <div id="menu">
+      <ul id="menuList">
+        <li class="list item1">item1</li>
+        <li class="list item2">item2</li>
+        <li class="list item3">item3</li>
+        <li class="list item4">item4</li>
+        <li class="list item5">item5</li>
+      </ul>
+    </div>
+  </div>
+  <div id="footer">
+    <span class="foot">footer</span>
+  </div>
+</div>
+<div id="controller">
+  <select name="query" id="selectors">
+    <option value="li">li</option>
+    <option value="ul > *">ul > *</option>
+    <option value="#menu li">#menu li</option>
+    <option value=".list">.list</option>
+    <option value=".item1">.item1</option>
+    <option value=".item2">.item2</option>
+    <option value=".item3">.item3</option>
+    <option value=".item4">.item4</option>
+    <option value=".item5">.item5</option>
+  </select>
+  <label>
+    <input id="one" type="radio" class="radio" value="querySelector" name="q" checked />
+    querySelector()
+  </label>
+  <label>
+    <input id="all" type="radio" class="radio" value="querySelectorAll" name="q" />
+    querySelectorAll()
+  </label>
+</div>
+<script>
+(function(global) {
+  var selectors = null, fnName = null;
+
+  /**
+   * 前回の結果を初期化
+   */
+  function reset() {
+    var selected = document.querySelectorAll('.selected');
+    for (var i = 0; i < selected.length; i++) {
+      var elem = selected[i];
+      elem.classList.remove('selected');
+    }
+  }
+
+  /**
+   * 選択したCSSセレクタにスタイルを適用する
+   *
+   * @param {string} selectors CSSセレクタ.
+   * @param {string} name SelectorsAPIの関数名(querySelector, querySelectorAll).
+   */
+  function update(selectors, name) {
+    reset();
+    if (name === 'querySelector') {
+      document.querySelector(selectors).classList.add('selected');
+    } else {
+      var elems = document.querySelectorAll(selectors);
+      for (var i = 0; i < elems.length; i++) {
+        elems[i].classList.add('selected');
+      }
+    }
+  }
+
+  // セレクターの変更
+  document.getElementById('selectors').addEventListener('change', function(e) {
+    if (this.value !== '') {
+      selectors = this.value;
+      update(selectors, fnName);
+    }
+  }, false);
+
+  // querySelector選択
+  document.getElementById('one').addEventListener('click', function(e) {
+    fnName = this.value;
+    update(selectors, fnName);
+  }, false);
+
+  // querySelectorAll選択
+  document.getElementById('all').addEventListener('click', function(e) {
+    fnName = this.value;
+    update(selectors, fnName);
+  }, false);
+
+  // Initialize.
+  global.addEventListener('load', function(e) {
+    var options = document.getElementById('selectors'),
+        radios = document.getElementsByName('q');
+    selectors = options[0].value;
+    fnName = radios[0].value;
+    reset();
+  }, false);
+}(this));
+</script>
+</body>
+</html>
