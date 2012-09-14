@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>geolocation</title>
+</head>
+<body>
+<h1>Geolocationサンプル</h1>
+<article id="content">
+<p>navigator.geolocation.watchPosition: <input id="watch" type="button" class="button" value="On" name="" />
+<p>Geolocation status: <span id="status">checking...</span></p>
+</article>
+<script src="http://maps.google.com/maps/api/js?sensor=false&lang=ja"></script>
+<script>
+(function() {
+  // Google Maps用
+  var map = null, marker = null;
+  // navigator.geolocation.watchPostionのID
+  var watchId = null;
+
+  /**
+   * geolocation成功時のcallback.
+   *
+   * @param {Geopostion} position 位置情報を含むオブジェクト.
+   */
+  function success(position) {
+    var s = document.getElementById('status'),
+        lat = position.coords.latitude,
+        lng = position.coords.longitude,
+        checkTime = new Date(position.timestamp);
+
+    s.innerHTML = 'Success: ' + checkTime + '<br/>' +
+      'Latitude: ' + lat + ' Longitude: ' + lng;
+
+    var mapView = document.getElementById('map');
+    if (!mapView) {
+      // Map新規作成
+      var mapDiv = document.createElement('div');
+      mapDiv.id = 'map';
+      mapDiv.style.height = '400px';
+      mapDiv.style.width= '560px';
+      document.getElementById('content').appendChild(mapDiv);
+
+      // Google Map作成
+      var latLng = new google.maps.LatLng(lat, lng);
+      var opts = {
+        zoom: 15,
+        center: latLng,
+        mapTypeControl: false,
+        navigationControlOptions: {
+          style: google.maps.NavigationControlStyle.SMALL
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      map = new google.maps.Map(document.getElementById('map'), opts);
+      maker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: "I'm here!"
+      });
+    } else {
+      // Map更新
+      var latLng = new google.maps.LatLng(lat, lng);
+      map.setCenter(latLng);
+      maker.setPosition(latLng);
+    }
+  }
+
+  /**
+   * Geolocation失敗時のcallback.
+   *
+   * @param {*} msg エラーメッセージかエラーオブジェクト.
+   */
+  function error(msg) {
+    var s = document.getElementById('status');
+    s.innerHTML = typeof msg === 'string' ?
+        msg : (msg && msg.message || 'failed');
+  }
+
+  // ボタンクリックで"watchPosition"開始/停止
+  document.getElementById('watch').addEventListener('click', function(e) {
+    if (watchId) {
+      navigator.geolocation.clearWatch(watchId)
+      this.value = 'On';
+      watchId = null;
+    } else {
+      var self = this;
+      watchId = navigator.geolocation.watchPosition(function(va_args) {
+        success(va_args);
+        self.value = 'Off';
+      }, error);
+    }
+  }, false);
+
+  // Entry point.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+    error('Not Supported');
+  }
+}());
+</script>
+</body>
+</html>
