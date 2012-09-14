@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>requestAnimationFrame</title>
+<style>
+#stage {
+  position: relative;
+  width: 350px;
+  height: 150px;
+  background-color: lightblue;
+}
+#mover {
+  position: absolute;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+</style>
+<script src="js/modernizr.js"></script>
+</head>
+<body>
+<h1>RequestAnimationFrameサンプル</h1>
+<div id="message">水色エリアをクリックでアニメーションの開始と停止を行います。</div>
+<!-- Animation stage. -->
+<div id="stage">
+  <!-- Animation object. -->
+  <div id="mover"></div>
+</div>
+<script>
+(function() {
+  var fps = 60,           // FPS(requestAnimationFrameと同一タイミングになるように調整).
+      mover = null,       // アニメーション図形要素.
+      isRunning = false,
+      animationIndex = 0, // アニメーション位置検索用インデックス.
+      direction = 1,      // 移動方向(1: 右, -1: 左).
+      animationId = null; // requestAnimationFrameのID またはsetTimeoutのID.
+
+  // ----- Modernizrでベンダープレフィックス付きのAPIを取得
+  // Get requestAnimationFrame API.
+  window.requestAnimationFrame = (function() {
+    return Modernizr.prefixed('requestAnimationFrame', window) ||
+    function(callback) {
+      // Fallback function.
+      window.setTimeout(callback, 1000 / fps);
+    };
+  }());
+
+  // Get cancelAnimationFrame API.
+  window.cancelAnimationFrame = (function() {
+    return Modernizr.prefixed('cancelAnimationFrame', window) ||
+      function(id) { window.clearTimeout(id); };
+  }());
+
+  /**
+   * アニメーション描画処理
+   *
+   * @param {number} left 図形左位置.
+   */
+  function render(left) {
+    mover.style.left = left + 'px';
+  }
+
+  /**
+   * アニメーション更新処理
+   */
+  function update() {
+    if (direction > 0) {
+      animationIndex++;
+    } else {
+      animationIndex--;
+    }
+    if (animationIndex >= 300) {
+      direction = -1;
+    } else if (animationIndex <= 0) {
+      direction = 1;
+    }
+    render(animationIndex);
+  }
+
+  /**
+   * アニメーション開始処理
+   */
+  function startAnimation() {
+    isRunning = true;
+    update();
+    animationId = requestAnimationFrame(startAnimation);
+  }
+
+  /**
+   * アニメーション停止処理
+   */
+  function stopAnimation() {
+    isRunning = false;
+    cancelAnimationFrame(animationId);
+  }
+
+  /**
+   * アニメーションスイッチ
+   */
+  function toggle() {
+    if (isRunning) {
+      stopAnimation();
+    } else {
+      startAnimation();
+    }
+  }
+
+  // Entry point.
+  window.addEventListener('load', function(e) {
+    var stage = document.getElementById('stage');
+    mover = document.getElementById('mover');
+
+    // Stageクリックで図形アニメーション開始 OR 停止
+    stage.addEventListener('click', toggle, false);
+  }, false);
+}());
+</script>
+</body>
+</html>
