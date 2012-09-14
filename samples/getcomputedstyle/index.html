@@ -96,7 +96,7 @@
     // 算出済みスタイルはキャメルケースで取得できる(font-size -> fontSize)
     buf = [];
     buf[buf.length] = createParagraph('Computed Style');
-    buf[buf.length] = createParagraph('p:first-letter {');
+    buf[buf.length] = createParagraph('#text:first-letter {');
     buf[buf.length] = createParagraph('  font-size: ' + textStyles.fontSize);
     buf[buf.length] = createParagraph('  background-color: ' + textStyles.backgroundColor);
     buf[buf.length] = createParagraph('  color: ' + textStyles.color);
