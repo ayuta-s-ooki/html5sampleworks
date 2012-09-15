@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* 共通のボックスサイズを設定 */
-/* line 21, ../sass/main.scss */
+/* line 18, ../sass/main.scss */
 #normal,
 #calc,
 #sassAdd {
@@ -11,7 +11,7 @@
 }
 
 /* 元のまま */
-/* line 29, ../sass/main.scss */
+/* line 26, ../sass/main.scss */
 #normal {
   background-color: lime;
 }
@@ -20,11 +20,12 @@
  * CSS3 calc()を使用して異なる単位でサイズを拡大
  *    calc($boxWidth + 1em);
  */
-/* line 37, ../sass/main.scss */
+/* line 34, ../sass/main.scss */
 #calc {
-  width: -moz-calc(50px + 1em);
-  width: -o-calc(50px + 1em);
   width: -webkit-calc(50px + 1em);
+  width: -moz-calc(50px + 1em);
+  width: -ms-calc(50px + 1em);
+  width: -o-calc(50px + 1em);
   width: calc(50px + 1em);
   background-color: red;
 }
@@ -33,7 +34,7 @@
  * SASSの計算式でサイズを拡大(同一単位の加算か掛け算)
  *    $boxWidth(px) + 50px;
  */
-/* line 46, ../sass/main.scss */
+/* line 43, ../sass/main.scss */
 #sassAdd {
   color: white;
   width: 100px;
