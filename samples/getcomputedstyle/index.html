@@ -54,25 +54,25 @@
 <script>
 (function() {
   /** @type {RegExp} CSSプロパティキーパターンマッチ */
-  var namedArgRegExp = new RegExp('%\\((\\w+)\\)');
+  var namedArgRegExp = /%\((\w+)\)s/;
 
   /** @type {Array.<string>} Text CSSプロパティ用テンプレート配列 */
   var textTemplate = [
     '#text:first-letter {',
-    '  font-size: %(fontSize);',
-    '  background-color: %(backgroundColor);',
-    '  color: %(color);',
+    '  font-size: %(fontSize)s;',
+    '  background-color: %(backgroundColor)s;',
+    '  color: %(color)s;',
     '}'
   ];
 
   /** @type {Array.<string>} Box CSSプロパティ用テンプレート配列 */
   var boxTemplate = [
     '.box {',
-    '  width: %(width);',
-    '  height: %(height);',
-    '  margin: %(margin);',
-    '  background-color: %(backgroundColor);',
-    '  color: %(color);',
+    '  width: %(width)s;',
+    '  height: %(height)s;',
+    '  margin: %(margin)s;',
+    '  background-color: %(backgroundColor)s;',
+    '  color: %(color)s;',
     '}'
   ];
 
@@ -96,7 +96,7 @@
    *    CSSプロパティ値プレースホルダー付き文字列テンプレート.
    * @param {RegExp} regex プレースホルダー取得用RegExp.
    */
-  function buildCSSFragment(buf, props, template, regex) {
+  function buildCSSFragments(buf, props, template, regex) {
     /**
      * 正規表現最初の後方参照結果を返す
      *
@@ -105,7 +105,7 @@
      * @return {?string} 一致した文字列 OR null.
      */
     function firstMatch(regex, string) {
-      var match = regex.exec(string);
+      var match = string.match(regex);
       return match ? match[1] : null;
     }
 
@@ -137,8 +137,8 @@
 
     var buffer = [];
     buffer[buffer.length] = createParagraph('CSS:');
-    buildCSSFragment(buffer, cssTextValues, textTemplate, namedArgRegExp);
-    buildCSSFragment(buffer, cssBoxValues, boxTemplate, namedArgRegExp);
+    buildCSSFragments(buffer, cssTextValues, textTemplate, namedArgRegExp);
+    buildCSSFragments(buffer, cssBoxValues, boxTemplate, namedArgRegExp);
 
     baseStyle.innerHTML = buffer.join('');
 
@@ -150,8 +150,8 @@
     // 算出済みスタイルはキャメルケースで取得できる(font-size -> fontSize)
     buffer = [];
     buffer[buffer.length] = createParagraph('Computed Style:');
-    buildCSSFragment(buffer, textStyles, textTemplate, namedArgRegExp);
-    buildCSSFragment(buffer, boxStyles, boxTemplate, namedArgRegExp);
+    buildCSSFragments(buffer, textStyles, textTemplate, namedArgRegExp);
+    buildCSSFragments(buffer, boxStyles, boxTemplate, namedArgRegExp);
 
     // 算出済みスタイルを画面に出力
     debug.innerHTML = buffer.join('');
