@@ -53,6 +53,28 @@
 </div>
 <script>
 (function() {
+  /** @type {RegExp} CSSプロパティキーパターンマッチ */
+  var namedArgRegExp = new RegExp('%\\((\\w+)\\)');
+
+  /** @type {Array.<string>} Text CSSプロパティ用テンプレート配列 */
+  var textTemplate = [
+    '#text:first-letter {',
+    '  font-size: %(fontSize);',
+    '  background-color: %(backgroundColor);',
+    '  color: %(color);',
+    '}'
+  ];
+
+  /** @type {Array.<string>} Box CSSプロパティ用テンプレート配列 */
+  var boxTemplate = [
+    '.box {',
+    '  width: %(width);',
+    '  height: %(height);',
+    '  margin: %(margin);',
+    '  background-color: %(backgroundColor);',
+    '  color: %(color);',
+    '}'
+  ];
 
   /**
    * <p>出力用文字列生成
@@ -65,28 +87,60 @@
     return ['<p>', str, '</p>'].join('');
   }
 
+  /**
+   * CSSプロパティ用文字列を構築し、バッファに追加
+   *
+   * @param {Array.<string>} buf 格納バッファ.
+   * @param {Object} props CSSプロパティ.
+   * @param {Array.<string>} template
+   *    CSSプロパティ値プレースホルダー付き文字列テンプレート.
+   * @param {RegExp} regex プレースホルダー取得用RegExp.
+   */
+  function buildCSSFragment(buf, props, template, regex) {
+    /**
+     * 正規表現最初の後方参照結果を返す
+     *
+     * @param {RegExp} regex プレースホルダー取得用RegExp.
+     * @param {string} ソース文字列.
+     * @return {?string} 一致した文字列 OR null.
+     */
+    function firstMatch(regex, string) {
+      var match = regex.exec(string);
+      return match ? match[1] : null;
+    }
+
+    for (var i = 0; i < template.length; i++) {
+      var prop = firstMatch(regex, template[i]);
+      buf[buf.length] = createParagraph(template[i].replace(regex, props[prop]));
+    }
+  }
+
+  // Entry point.
   window.addEventListener('load', function(e) {
     var baseStyle = document.getElementById('baseStyle'),
         debug = document.getElementById('debug'),
         text = document.getElementById('text'),
         box = document.getElementById('box1');
 
-    var buf = [];
-    buf[buf.length] = createParagraph('CSS');
-    buf[buf.length] = createParagraph('#text:first-letter {');
-    buf[buf.length] = createParagraph('  font-size: 2em;');
-    buf[buf.length] = createParagraph('  background-color: rgba(0, 0, 0, 0.8);');
-    buf[buf.length] = createParagraph('  color: white;');
-    buf[buf.length] = createParagraph('}');
-    buf[buf.length] = createParagraph('.box {');
-    buf[buf.length] = createParagraph('  width: 50px;');
-    buf[buf.length] = createParagraph('  height: 50px;');
-    buf[buf.length] = createParagraph('  margin: 5px;');
-    buf[buf.length] = createParagraph('  background-color: green;');
-    buf[buf.length] = createParagraph('  color: white;');
-    buf[buf.length] = createParagraph('}');
+    var cssTextValues = {
+      fontSize: '2em',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      color: 'white'
+    };
+    var cssBoxValues = {
+      width: '50px',
+      height: '50px',
+      margin: '5px',
+      backgroundColor: 'green',
+      color: 'white'
+    };
 
-    baseStyle.innerHTML = buf.join('');
+    var buffer = [];
+    buffer[buffer.length] = createParagraph('CSS:');
+    buildCSSFragment(buffer, cssTextValues, textTemplate, namedArgRegExp);
+    buildCSSFragment(buffer, cssBoxValues, boxTemplate, namedArgRegExp);
+
+    baseStyle.innerHTML = buffer.join('');
 
     // textの算出済みスタイルを取得
     var textStyles = document.defaultView.getComputedStyle(text, ':first-letter');
@@ -94,23 +148,13 @@
     var boxStyles = document.defaultView.getComputedStyle(box);
 
     // 算出済みスタイルはキャメルケースで取得できる(font-size -> fontSize)
-    buf = [];
-    buf[buf.length] = createParagraph('Computed Style');
-    buf[buf.length] = createParagraph('#text:first-letter {');
-    buf[buf.length] = createParagraph('  font-size: ' + textStyles.fontSize);
-    buf[buf.length] = createParagraph('  background-color: ' + textStyles.backgroundColor);
-    buf[buf.length] = createParagraph('  color: ' + textStyles.color);
-    buf[buf.length] = createParagraph('}');
-    buf[buf.length] = createParagraph('.box {');
-    buf[buf.length] = createParagraph('  width: ' + boxStyles.width);
-    buf[buf.length] = createParagraph('  height: ' + boxStyles.height);
-    buf[buf.length] = createParagraph('  margin: ' + boxStyles.margin);
-    buf[buf.length] = createParagraph('  background-color: ' + boxStyles.backgroundColor);
-    buf[buf.length] = createParagraph('  color: ' + boxStyles.color);
-    buf[buf.length] = createParagraph('}');
+    buffer = [];
+    buffer[buffer.length] = createParagraph('Computed Style:');
+    buildCSSFragment(buffer, textStyles, textTemplate, namedArgRegExp);
+    buildCSSFragment(buffer, boxStyles, boxTemplate, namedArgRegExp);
 
     // 算出済みスタイルを画面に出力
-    debug.innerHTML = buf.join('');
+    debug.innerHTML = buffer.join('');
   }, false);
 }());
 </script>
