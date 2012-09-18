@@ -18,6 +18,7 @@
       background-color: #F10;
     }
   </style>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 </head>
 <body>
   <!-- .container -->
@@ -85,7 +86,10 @@
      * @param {Event} e イベントオブジェクト.
      */
     function onClickMatchesSelector(e) {
-      if (!e.target.webkitMatchesSelector('.btn-group > button')) return false;
+      // Modernizrを使って、`matches`メソッドを取得
+      var fn = Modernizr.prefixed('matches', e.target) ||
+          Modernizr.prefixed('matchesSelector', e.target);
+      if (!fn('.btn-group > button')) return false;
       // clickした要素がセレクターにマッチしていれば、スタイルきりかえを実施
       toggle(e.target);
     }
