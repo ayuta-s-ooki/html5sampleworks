@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>matchesSelector</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+  <style>
+    .span2 {
+      border: 1px solid blue;
+    }
+    .span3 {
+      border: 1px solid red;
+    }
+    .span6 {
+      border: 1px solid green;
+    }
+    .matches {
+      background-color: #F10;
+    }
+  </style>
+</head>
+<body>
+  <!-- .container -->
+  <div class="container">
+    <!-- #header -->
+    <div id="header">
+      <h1>matchesSelectorサンプル</h1>
+      <p class="lead">対応するボタンをクリックすると色が切り替わります</p>
+    </div>
+    <!-- /#header -->
+    <!-- #content.row -->
+    <div id="content" class="row">
+      <div class="span3 left">
+        <h2>h2. Left</h2>
+      </div>
+      <div class="span6 middle">
+        <h2>h2. Middle</h2>
+      </div>
+      <div class="span2 right">
+        <h2>h2. Right</h2>
+      </div>
+    </div>
+    <!-- /#content.row -->
+    <!-- .controls -->
+    <div id="controller" class="controls">
+      <div class="btn-group" data-toggle="buttons-checkbox">
+        <button type="button" class="btn left">Left</button>
+        <button type="button" class="btn middle">Middle</button>
+        <button type="button" class="btn right">Right</button>
+        <a href="javascript: void(0);" class="btn dummy">Dummy</a>
+      </div>
+    </div>
+    <!-- /.controls -->
+  </div>
+  <!-- /.container -->
+  <script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+  <script>
+  (function($, undefined) {
+    var selectorPrefix = '#content';  // ボタンタップによりスタイルを適用するコンテンツコンテナのセレクター
+
+    /**
+     * ボタンが示すコンテンツのスタイルきりかえ
+     *
+     * @param {Element} element ボタン要素.
+     */
+    function toggle(element) {
+      var classList = element.classList,
+          selector = null;
+      for (var i = 0; i < classList.length; i++) {
+        if (classList[i] !== 'btn' && classList[i] != 'active') {
+          selector = classList[i];
+        }
+      }
+      if (selector) {
+        var matchElement = document.querySelector(selectorPrefix + ' .' + selector);
+        matchElement.classList.toggle('matches');
+      }
+    }
+
+    /**
+     * クリックした要素を`matchesSelectorでチェックし、
+     *     <button>要素であれば、スタイル切り替え処理を行う
+     *
+     * @param {Event} e イベントオブジェクト.
+     */
+    function onClickMatchesSelector(e) {
+      if (!e.target.webkitMatchesSelector('.btn-group > button')) return false;
+      // clickした要素がセレクターにマッチしていれば、スタイルきりかえを実施
+      toggle(e.target);
+    }
+
+    // ボタンをまとめる<div>要素に`click`イベントを設定し、`matchesSelector`で要素を確認
+    // 下のコメントアウトコードにあるjQuery#on(旧delegate)と同等の処理を行う
+    document.getElementById('controller').addEventListener('click', onClickMatchesSelector, false);
+
+//    $('#controller').on('click', 'button', function(e) {
+//      console.log(e.target);
+//    });
+  }(jQuery));
+  </script>
+</body>
+</html>
