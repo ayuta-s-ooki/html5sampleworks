@@ -5,14 +5,14 @@
   <title>matchesSelector</title>
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet" />
   <style>
-    .span2 {
+    div.top {
       border: 1px solid blue;
     }
-    .span3 {
-      border: 1px solid red;
-    }
-    .span4 {
+    div.middle {
       border: 1px solid green;
+    }
+    div.bottom {
+      border: 1px solid red;
     }
     .matches {
       background-color: #F10;
@@ -28,25 +28,25 @@
       <p class="lead">対応するボタンをクリックすると色が切り替わります</p>
     </div>
     <!-- /#header -->
-    <!-- #content.row -->
-    <div id="content" class="row">
-      <div class="span3 left">
-        <h2>h2. Left</h2>
+    <!-- #content -->
+    <div id="content">
+      <div class="top">
+        <h2>h2. Top</h2>
       </div>
-      <div class="span4 middle">
+      <div class="middle">
         <h2>h2. Middle</h2>
       </div>
-      <div class="span2 right">
-        <h2>h2. Right</h2>
+      <div class="bottom">
+        <h2>h2. Bottom</h2>
       </div>
     </div>
-    <!-- /#content.row -->
+    <!-- /#content -->
     <!-- .controls -->
     <div id="controller" class="controls">
       <div class="btn-group" data-toggle="buttons-checkbox">
-        <button type="button" class="btn left">Left</button>
+        <button type="button" class="btn top">Top</button>
         <button type="button" class="btn middle">Middle</button>
-        <button type="button" class="btn right">Right</button>
+        <button type="button" class="btn bottom">Bottom</button>
         <a href="javascript: void(0);" class="btn dummy">Dummy</a>
       </div>
     </div>
