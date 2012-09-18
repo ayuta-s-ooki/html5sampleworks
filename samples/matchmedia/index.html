@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>matchMediaサンプル</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+  <style>
+    .span8 {
+      background-color: lightgreen;
+    }
+
+    .span4 {
+      background-color: red;
+    }
+    #footer {
+      margin-top: 5px;
+    }
+  </style>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+</head>
+<body>
+  <!-- .container-fluid -->
+  <div class="container-fluid">
+    <!-- #header -->
+    <div id="header">
+      <h1>matchMediaサンプル</h1>
+    </div>
+    <!-- /#header -->
+    <!-- .row-fluid -->
+    <div class="row-fluid">
+      <!-- .span8 -->
+      <div class="span8">メイン</div>
+      <!-- /.span8 -->
+      <!-- .span4 -->
+      <div class="span4">サイドバー</div>
+      <!-- /.span4 -->
+    </div>
+    <!-- /.row-fluid -->
+    <!-- #footer -->
+    <div id="footer">
+      <pre>window.matchMedia is <strong><span id="mm">checking...</span></strong>
+window.matchMedia('(min-width: 600px)'): <strong><span id="wq">checking...</span></strong>
+window.matchMedia('(orientation: portrait)'): <strong><span id="pq">checking...</span></strong></pre>
+    </div>
+    <!-- /#footer -->
+  </div>
+  <!-- /.container-fluid -->
+  <script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+  <script>
+  (function($, undefined) {
+    var widthQueryList = null,
+        portraitQueryList = null,
+        $mm = $('#mm'),
+        $wq = $('#wq'),
+        $pq = $('#pq');
+
+    /**
+     * (min-width: 600px)のクエリ通知を受け取るリスナー関数
+     *
+     * @param {MediaQueryList} mediaQueryList メディアクエリリストオブジェクト.
+     */
+    function onUpdateWidth(mediaQueryList) {
+      $wq.text(mediaQueryList.matches + '');
+    }
+
+    /**
+     * (orientation: portrait)のクエリ通知を受け取るリスナー関数
+     *
+     * @param {MediaQueryList} mediaQueryList メディアクエリリストオブジェクト.
+     */
+    function onUpdateOrientation(mediaQueryList) {
+      $pq.text(mediaQueryList.matches + '');
+    }
+
+    // Entry point.
+    $(document).ready(function() {
+      if (window.matchMedia) {
+        $mm.text('supported');
+
+        // メディアクエリリストの作成
+        widthQueryList = window.matchMedia('(min-width: 600px)');
+        portraitQueryList = window.matchMedia('(orientation: portrait)');
+
+        // クエリ通知を受け取るリスナー作成
+        widthQueryList.addListener(onUpdateWidth);
+        portraitQueryList.addListener(onUpdateOrientation);
+
+        onUpdateWidth(widthQueryList);
+        onUpdateOrientation(portraitQueryList);
+      } else {
+        $mm.text('not supported');
+      }
+    });
+  }(jQuery));
+  </script>
+</body>
+</html>
