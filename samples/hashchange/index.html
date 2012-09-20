@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Hashchange Eventサンプル</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+</head>
+<body>
+  <h1>Hashchange Eventサンプル</h1>
+  <!-- .container -->
+  <div class="container">
+    <!-- #content -->
+    <div class="row">
+      <!-- .span2 -->
+      <div class="span2">
+        <!-- .nav nav-list-sidenav -->
+        <ul class="nav nav-tabs nav-stacked">
+        <!-- /.nav nav-list-sidenav -->
+          <li><a href="#test1">#test1</a></li>
+          <li><a href="#test2">#test2</a></li>
+          <li><a href="#test3">#test3</a></li>
+        </ul>
+      </div>
+      <!-- /.span2 -->
+      <!-- #main.span10 -->
+      <div id="main" class="span10">
+        <p class="text-info">リストのリンクをクリックして、URLが変更されることを確認してみてください。また、ブラウザの戻るボタンをクリックした場合一つ前のURLへ、進むボタンをクリックした場合一つ後のURLへそれぞれ変更されることも確認してみてください。</p>
+      </div>
+      <!-- /#main.span10 -->
+    </div>
+    <!-- /#content -->
+    <!-- #debug.table table-striped table-condensed -->
+    <table id="debug" class="span10 table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>oldURL</th>
+          <th>newURL</th>
+          <th>イベント</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <!-- /#debug.table table-striped table-condensed -->
+  </div>
+  <!-- /.container -->
+  <script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+  <script>
+  (function() {
+    var $tbody = $('tbody');
+
+    /**
+     * yyyy-MM-dd HH:mm:ss, sssを返す
+     *
+     * @param {Date} date 日付オブジェクト.
+     * @return {string} フォーマットされた日付.
+     */
+    function strfTime(date) {
+      return [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+      ].join('-') + ' ' + [
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+      ].join(':') + ', ' + date.getMilliseconds();
+    }
+
+    /**
+     * テーブルデータを作成して返す
+     *
+     * @param {string} oldURL Hashchange前のURL.
+     * @param {string} newURL Hashchange後のURL.
+     * @param {string} type イベントタイプ.
+     * @return {Element} <tr>.
+     */
+    function buildTableData(oldURL, newURL, type) {
+      var tr = document.createElement('tr');
+      var tdata = [
+        '<td>' + oldURL + '</td>',
+        '<td>' + newURL + '</td>',
+        '<td>' + type + '</td>'
+      ].join('');
+      $(tr).append(tdata);
+      return tr;
+    }
+
+    /**
+     * イベント発生画面出力
+     *
+     * @param {Event} e Hashchange event.
+     */
+    function debugEvents(e) {
+      var tr = buildTableData(e.oldURL, e.newURL, e.type);
+      $tbody.prepend(tr);
+    }
+
+    /**
+     * onhashchange イベントハンドラ
+     */
+    function onHashChange(e) {
+      debugEvents(e);
+    }
+
+    // onhashchange eventのリスナーをセット
+    window.addEventListener('hashchange', onHashChange, false);
+  }());
+  </script>
+</body>
+</html>
