@@ -48,25 +48,7 @@
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
   <script>
   (function() {
-    var $tbody = $('tbody');
-
-    /**
-     * yyyy-MM-dd HH:mm:ss, sssを返す
-     *
-     * @param {Date} date 日付オブジェクト.
-     * @return {string} フォーマットされた日付.
-     */
-    function strfTime(date) {
-      return [
-        date.getFullYear(),
-        date.getMonth() + 1,
-        date.getDate()
-      ].join('-') + ' ' + [
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds()
-      ].join(':') + ', ' + date.getMilliseconds();
-    }
+    var tbody = document.querySelector('tbody');
 
     /**
      * テーブルデータを作成して返す
@@ -83,7 +65,7 @@
         '<td>' + newURL + '</td>',
         '<td>' + type + '</td>'
       ].join('');
-      $(tr).append(tdata);
+      tr.innerHTML = tdata;
       return tr;
     }
 
@@ -94,7 +76,7 @@
      */
     function debugEvents(e) {
       var tr = buildTableData(e.oldURL, e.newURL, e.type);
-      $tbody.prepend(tr);
+      tbody.insertBefore(tr, tbody.firstChild);
     }
 
     /**
