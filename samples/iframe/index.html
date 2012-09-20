@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Sandbox attribute for iframeサンプル</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+</head>
+<body>
+  <h1>Sandbox attribute for iframeサンプル</h1>
+  <!-- .container -->
+  <div class="container">
+    <!-- #storage.row -->
+    <div id="storage" class="row">
+      <div class="input-append">
+        <input class="input-xlarge" id="valueInput" size="16" type="text" placeholder="localStorageに値を保存します">
+        <button id="setBtn" class="btn" type="button">Set</button>
+        <button id="clearBtn" class="btn" type="button">Clear</button>
+      </div>
+    </div>
+    <!-- /#storage.row -->
+    <table class="table table-striped">
+      <caption>Display iframes</caption>
+      <thead>
+        <tr>
+          <th>iframe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>
+            <span class="label">sandbox</span>
+            <iframe width="500" sandbox src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <span class="label">sandbox="allow-forms"</span>
+            <iframe width="500" sandbox="allow-forms" src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <span class="label">sandbox="allow-scripts"</span>
+            <iframe width="500" sandbox="allow-scripts" src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <span class="label">sandbox="allow-same-origin allow-scripts"</span>
+            <iframe width="500" sandbox="allow-same-origin allow-scripts" src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <span class="label">sandbox="allow-forms allow-scripts"</span>
+            <iframe width="500" sandbox="allow-forms allow-scripts" src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <span class="label">sandbox="allow-same-origin allow-forms allow-scripts"</span>
+            <iframe width="500" sandbox="allow-same-origin allow-forms allow-scripts" src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <span class="label">sandbox="allow-top-navigation"</span>
+            <iframe width="500" sandbox="allow-top-navigation" src="./a.html" seamless></iframe>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.container -->
+  <script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+  <script>
+  (function(undefined) {
+    var input = document.getElementById('valueInput');
+
+    document.getElementById('setBtn').addEventListener('click', function(e) {
+      localStorage.setItem('iframe', input.value || 'none');
+    }, false);
+
+    document.getElementById('clearBtn').addEventListener('click', function(e) {
+      localStorage.removeItem('iframe');
+    }, false);
+  }());
+  </script>
+</body>
+</html>

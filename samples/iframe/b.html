@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>iframe B</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <label>Content B</label>
+    <!-- .check -->
+    <div id="check"></div>
+    <!-- /.check -->
+    <a href="./a.html">Back to a.html</a>
+  </div>
+  <script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+  <script>
+  (function($, undefined) {
+    var $check = $('#check');
+    // <span class="label label-success">Success</span>
+    $(document).ready(function() {
+      var value = null, level = null;
+      try {
+        value = localStorage.getItem('iframe');
+        level = 'info';
+      } catch (ex) {
+        value = ex.message;
+        level = 'warning';
+      }
+
+      $check
+        .append('<p id="script">Script実行: <span class="label label-success">Success</span>')
+        .append('<p id="storage">localStorageへのアクセス: <span class="label label-'+ level + '">' + value + '</span>');
+    });
+
+    $(window).on('storage', function(e) {
+      var ev = e.originalEvent;
+      $('#storage span').text(ev.newValue);
+    });
+  }(jQuery));
+  </script>
+</body>
+</html>
